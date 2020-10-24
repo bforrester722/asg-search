@@ -1,0 +1,136 @@
+
+<style>
+
+  :host {
+    display:           flex;
+    align-items:       center;
+    justify-content:   center;
+    height:            64px;
+    padding:           0px 16px;
+    --search-background-color:  var(--app-primary-color);
+    background-color: var(--search-background-color); 
+    --input-flex-grow: 1;
+  }
+
+  #search-close-wrapper {
+    flex-grow:      var(--input-flex-grow);
+    max-width:      296px;
+    position:       relative;
+    pointer-events: none;
+  }
+ 
+  paper-input {
+    @apply --single-line-truncate-mixin;
+    padding:          0px 8px;
+    border-radius:    8px;
+    height:           40px;
+    display:          flex;
+    align-items:      center;
+    pointer-events:   auto;    
+    font-size:        16px;
+    background-color: var(--app-background-color);
+    --paper-input-container-color:       var(--app-accent-color);
+    --paper-input-container-input-color: var(--dark-text-color);
+    --paper-input-container-focus-color: transparent;
+    --paper-input-container-underline: { 
+      display: none;
+    };
+    --paper-input-container: { 
+      display:     flex;
+      align-items: center;
+      width:       calc(100% - 40px); /* minus the 'X' button */
+      padding:     8px;
+    };
+    --paper-input-container-shared-input-style: {
+      width:         100%;
+      white-space:   nowrap;
+      text-overflow: ellipsis;
+    };
+    --paper-input-container-label: {
+      position:  absolute;
+      top:       0px;
+      font-size: 16px;
+    };
+  }
+
+  iron-icon {
+    color: var(--app-primary-color);
+  }
+
+  .hide-search-clear-btn {
+    opacity: 0;
+  }
+
+  #close-button {
+    color:          var(--app-primary-color);
+    pointer-events: auto;
+    position:       absolute;
+    top:            0px;
+    right:          0px;
+  }
+
+  #search-buttons {
+    display:     flex;
+    margin-left: 8px;
+  }
+
+  #search-buttons[hidden] {
+    display: none;
+  }
+
+  .advanced-active {
+    color: var(--app-light-color);
+  }
+
+  .advanced-active-buylist {
+    color: var(--app-primary-color);
+  }
+
+</style>
+
+
+<iron-a11y-keys id="a11y" 
+                target="[[_a11yTarget]]" 
+                keys="enter"
+                on-keys-pressed="__a11yOnEnter">
+</iron-a11y-keys>
+
+<div id="search-close-wrapper">
+  <paper-input id="searchInput"
+               autocomplete
+               autocorrect
+               autocapitalize
+               label="Search Magic Cards"
+               no-label-float
+               tabindex="0"
+               value="[[search]]"
+               on-focused-changed="__onFocusPlaceSearchToolbar"
+               on-value-changed="__searchInputChanged"
+               aria-describedby="a11y">
+  </paper-input>
+  <paper-icon-button id="close-button"
+                     icon="app-icons:close" 
+                     slot="suffix" 
+                     class$="[[__computeHideSearchClearButton(search)]]"
+                     on-click="__clearSearchButtonClicked"
+                     aria-label="Clear search button">
+  </paper-icon-button>
+</div>
+
+<div id="search-buttons" 
+     hidden="[[hideButtons]]">
+  <paper-icon-button icon="app-icons:search"
+                     on-click="__searchButtonClicked">
+  </paper-icon-button>
+  <paper-icon-button class$="[[__computeMoreBtnClass(advancedActive, isBuylist)]]"
+                     icon="app-icons:more-vert"
+                     on-click="__moreButtonClicked">
+  </paper-icon-button>
+</div>
+
+<search-autocomplete id="autocomplete" 
+                     location="[[location]]" 
+                     search="[[_searchAndLocation]]"
+                     is-buylist="[[isBuylist]]"
+                     on-search-autocomplete-selected-changed="__autocompleteSelected">                       
+</search-autocomplete>
