@@ -1,0 +1,204 @@
+
+<style>
+      
+  :host {
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    width:          100%;
+    min-height:     100vh;
+    /* 100vh bottom padding so user can scroll far enough to see image fullscreen */
+    padding:        32px 0px 100vh 0px; 
+    background-color:        var(--app-body-color);
+    --search-selected-color: var(--app-primary-color);
+    --search-accent-color:   var(--app-accent-color);
+  }
+
+  #img-wrapper {
+    position: fixed;
+    top:      0px;
+    left:     0px;
+    height:   100vh;
+    width:    100vw;
+    background-color: inherit; /* for iron-image fade in */
+  }
+
+  iron-image {
+    height:    100%;
+    width:     100%;
+    transform: scale(1.2, 1.2);
+    background-color: inherit;
+  }
+
+  iron-image.scale {
+    transition: transform 30s linear 1s;
+    transform:  scale(1, 1);
+  }
+
+  #random-card-info {
+    position:   absolute;
+    bottom:     16px;
+    right:      16px;
+    text-align: end;
+  }
+
+  #artist {    
+    font-style: italic;
+  }
+
+  #reset-btn-wrapper {
+    width:     100%;
+    max-width: 678px;  /* align with max-width-grid */
+    margin:    0px auto;
+  }
+
+  paper-button {
+    margin: 4px;
+    background-color: var(--app-primary-color);
+    color:            var(--constant-light-text);
+  }
+
+  #max-width-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(304px, 702px));
+    z-index: 0; /* above background img */
+  }
+
+  #selector-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+    grid-gap: 8px;
+  }
+
+  #right-side-grids {
+    display:         flex;
+    flex-direction:  column;
+    justify-content: space-between;
+  }
+
+  #number-cards-wrapper {   
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+    grid-gap: 8px;
+  }
+
+  .wrapper {
+    padding: 8px 4px 0px 4px;
+  }
+
+  @media only screen and (min-width: 415px) {
+
+    .wrapper {
+      padding: 8px 16px 0px 16px;
+    }
+
+  }
+
+  @media only screen and (min-width: 1408px) {
+
+    #reset-btn-wrapper {
+      max-width: 1382px; /* align with max-width-grid */
+    }  
+
+    #max-width-grid {
+      width:     100%;
+      max-width: 1408px;
+      margin:    0px auto;
+    }
+
+  }
+
+  filter-number-card[hidden] {
+    display: none;
+  }
+
+</style>
+
+
+<div id="img-wrapper">
+  <iron-image class$="[[__computeImgClass(_randomCard)]]"
+              fade 
+              preload 
+              sizing="cover"
+              src="[[_backgroundImg]]">
+  </iron-image>
+  <div id="random-card-info">
+    <div>[[_randomCardName]]</div>
+    <div id="artist" hidden="[[_randomCardArtistHidden]]">
+      <iron-icon icon="asg-icons:brush"></iron-icon>
+      [[_randomCardArtist]]
+    </div>
+  </div>
+</div>
+
+<div id="reset-btn-wrapper">
+  <paper-button raised
+                on-click="__resetBtnClicked">
+    reset all
+  </paper-button>
+</div>
+
+<div id="max-width-grid">
+
+  <div id="selector-cards-wrapper" class="wrapper">
+    <search-type-card class="resetable"></search-type-card>
+
+    <sort-card class="resetable"></sort-card>
+
+    <is-card class="resetable"></is-card>
+
+    <set-card class="resetable"
+              selected="[[selectedSet]]">
+    </set-card>
+
+    <rarity-card class="resetable"></rarity-card>
+
+    <format-card class="resetable"></format-card>
+  </div>
+
+  <div id="right-side-grids">
+    <div class="wrapper">
+      <color-card class="resetable"></color-card>
+    </div>
+
+    <div id="number-cards-wrapper" class="wrapper">
+      <filter-number-card class="resetable"
+                          keyword="cmc" 
+                          name="Cost"
+                          title="Converted Mana Cost">
+      </filter-number-card>
+
+      <filter-number-card class="resetable"
+                          keyword="power" 
+                          name="Power"
+                          title="Power">
+      </filter-number-card>
+
+      <filter-number-card class="resetable"
+                          keyword="toughness" 
+                          name="Toughness"
+                          title="Toughness">
+      </filter-number-card>
+
+      <filter-number-card class="resetable"
+                          keyword="powtou" 
+                          name="Pow + Tough"
+                          title="Power and Toughness">
+      </filter-number-card>
+
+      <filter-number-card class="resetable"
+                          keyword="loyalty" 
+                          name="Loyalty"
+                          title="Loyalty">
+      </filter-number-card>
+
+      <filter-number-card class="resetable"
+                          keyword="usd" 
+                          name="Price"
+                          title="Price"
+                          hidden="[[__computeHidePrice(threshold)]]">
+      </filter-number-card>
+    </div>
+  </div>
+
+</div>

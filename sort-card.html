@@ -1,0 +1,24 @@
+
+<style>
+
+	:host {
+		display: block;
+		z-index: 1; /* make sure dropdown menu is on top of content below this parent */
+	}
+
+</style>
+
+
+<filter-card heading="Sort">
+
+	<keyword-items-selector id="selector"
+													items="[[_items]]"
+	                        keyword="order"
+	                        on-keyword-items-selector-selected-changed="__sortItemSelected">
+	</keyword-items-selector>
+
+	<direction-button direction="[[_direction]]" 
+										on-direction-button-value-changed="__directionChanged">
+	</direction-button>
+	
+</filter-card>

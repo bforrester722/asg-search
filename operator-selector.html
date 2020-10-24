@@ -1,0 +1,34 @@
+
+<style>
+
+	:host {
+		display: block;
+	}
+
+	app-dropdown-menu {
+		--listbox-mixin: {
+			display: flex;
+		};
+	}
+
+	#icon {
+		position: 			absolute;
+		pointer-events: none;
+	}
+
+</style>
+
+
+<app-dropdown-menu id="menu"
+									 align="auto"
+									 vertical-align="bottom"
+									 items="[[operators]]"
+									 on-app-dropdown-menu-value-changed="__menuValueChanged">
+	<paper-icon-button alt="[[selected]]" 
+										 slot="trigger">
+	</paper-icon-button>
+	<div id="icon" 
+			 slot="trigger">
+		[[selected]]
+	</div>
+</app-dropdown-menu>
