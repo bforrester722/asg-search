@@ -120,11 +120,13 @@
 <div id="search-buttons" 
      hidden="[[hideButtons]]">
   <paper-icon-button icon="app-icons:search"
-                     on-click="__searchButtonClicked">
+                     on-click="__searchButtonClicked"
+                     aria-label="search button">
   </paper-icon-button>
   <paper-icon-button class$="[[__computeMoreBtnClass(advancedActive, isBuylist)]]"
                      icon="app-icons:more-vert"
-                     on-click="__moreButtonClicked">
+                     on-click="__moreButtonClicked"
+                     aria-label="search options button">
   </paper-icon-button>
 </div>
 
