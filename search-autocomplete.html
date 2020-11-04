@@ -77,13 +77,15 @@
      class="list-animators x-wrapper">
   <div id="yWrapper" 
        class="list-animators y-wrapper">
+    <paper-button on-click="__closeBtnClicked" aria-label="Clear search button">
+        close
+    </paper-button>
     <paper-listbox id="autoCompleteList" 
                    class="list" 
-                   role="listbox">
+                   role="listbox"
+                   aria-label="auto complete list">
 
-      <paper-button on-click="__closeBtnClicked">
-        close
-      </paper-button>
+    
 
       <template is="dom-repeat" 
                 items="[[_autocomplete]]" 
